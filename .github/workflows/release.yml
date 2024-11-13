@@ -17,7 +17,9 @@ jobs:
   release:
     name: Release
     permissions:
-        contents: write
+      id-token: write
+      contents: write
+      attestations: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -63,3 +65,14 @@ jobs:
           KEYSTORE_ENTRY_PASSWORD: ${{ secrets.KEYSTORE_ENTRY_PASSWORD }}
         run: |
           npx semantic-release
+          
+      - name: Find APK file
+        id: find_apk
+        run: |
+          APK_LOCATION=$(find build/app/outputs/apk/release/ -name "revanced-manager-*.apk")
+          echo "APK_LOCATION=$APK_LOCATION" >> $GITHUB_ENV
+          
+      - name: 🛰️ Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ${{ env.APK_LOCATION }}

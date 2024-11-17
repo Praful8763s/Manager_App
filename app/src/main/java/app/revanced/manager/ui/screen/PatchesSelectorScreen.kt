@@ -135,7 +135,8 @@ fun PatchesSelectorScreen(
         }
     }
 
-    if (vm.compatibleVersions.isNotEmpty())
+    // TODO: properly handle appVersion == null
+    if (vm.compatibleVersions.isNotEmpty() && vm.appVersion != null)
         UnsupportedPatchDialog(
             appVersion = vm.appVersion,
             supportedVersions = vm.compatibleVersions,
@@ -144,7 +145,7 @@ fun PatchesSelectorScreen(
     var showUnsupportedPatchesDialog by rememberSaveable {
         mutableStateOf(false)
     }
-    if (showUnsupportedPatchesDialog)
+    if (showUnsupportedPatchesDialog && vm.appVersion != null)
         UnsupportedPatchesDialog(
             appVersion = vm.appVersion,
             onDismissRequest = { showUnsupportedPatchesDialog = false }
@@ -204,15 +205,15 @@ fun PatchesSelectorScreen(
                         when {
                             // Open unsupported dialog if the patch is not supported
                             !supported -> vm.openUnsupportedDialog(patch)
-                            
+
                             // Show selection warning if enabled
                             vm.selectionWarningEnabled -> showSelectionWarning = true
-                            
+
                             // Set pending universal patch action if the universal patch warning is enabled and there are no compatible packages
                             vm.universalPatchWarningEnabled && patch.compatiblePackages == null -> {
                                 vm.pendingUniversalPatchAction = { vm.togglePatch(uid, patch) }
                             }
-                            
+
                             // Toggle the patch otherwise
                             else -> vm.togglePatch(uid, patch)
                         }
@@ -275,7 +276,11 @@ fun PatchesSelectorScreen(
     Scaffold(
         topBar = {
             AppTopBar(
-                title = stringResource(R.string.patches_selected, selectedPatchCount, availablePatchCount),
+                title = stringResource(
+                    R.string.patches_selected,
+                    selectedPatchCount,
+                    availablePatchCount
+                ),
                 onBackClick = onBackClick,
                 actions = {
                     IconButton(onClick = vm::reset) {
@@ -436,7 +441,7 @@ private fun PatchItem(
     selected: Boolean,
     onToggle: () -> Unit,
     supported: Boolean = true
-) = ListItem (
+) = ListItem(
     modifier = Modifier
         .let { if (!supported) it.alpha(0.5f) else it }
         .clickable(onClick = onToggle)
@@ -457,6 +462,7 @@ private fun PatchItem(
             }
         }
     },
+    colors = transparentListItemColors
 )
 
 @Composable

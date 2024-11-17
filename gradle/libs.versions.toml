@@ -7,7 +7,7 @@ splash-screen = "1.0.1"
 compose-activity = "1.9.3"
 preferences-datastore = "1.1.1"
 work-runtime = "2.10.0"
-compose-bom = "2024.10.01"
+compose-bom = "2024.11.00"
 accompanist = "0.34.0"
 placeholder = "1.1.2"
 reorderable = "1.5.2"
@@ -26,6 +26,7 @@ kotlin = "2.0.21"
 android-gradle-plugin = "8.7.2"
 dev-tools-gradle-plugin = "2.0.21-1.0.27"
 about-libraries-gradle-plugin = "11.1.1"
+binary-compatibility-validator = "0.15.1"
 coil = "2.6.0"
 app-icon-loader-coil = "1.5.0"
 skrapeit = "1.2.2"
@@ -35,6 +36,12 @@ enumutil = "1.1.0"
 compose-icons = "1.2.4"
 kotlin-process = "1.4.1"
 hidden-api-stub = "4.3.3"
+
+# TODO: get rid of these.
+appcompat = "1.7.0"
+material = "1.12.0"
+activity = "1.9.1"
+constraintlayout = "2.1.4"
 
 [libraries]
 # AndroidX Core
@@ -131,11 +138,19 @@ reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reo
 # switch to br.com.devsrsouza.compose.icons after DevSrSouza/compose-icons#30 is merged
 compose-icons-fontawesome = { group = "com.github.BenjaminHalko.compose-icons", name = "font-awesome", version.ref = "compose-icons" }
 
+
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 devtools = { id = "com.google.devtools.ksp", version.ref = "dev-tools-gradle-plugin" }
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about-libraries-gradle-plugin" }
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }

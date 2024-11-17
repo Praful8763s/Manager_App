@@ -154,6 +154,9 @@ dependencies {
     implementation(libs.revanced.patcher)
     implementation(libs.revanced.library)
 
+    // Downloader plugins
+    implementation(project(":downloader-plugin"))
+
     // Native processes
     implementation(libs.kotlin.process)
 
@@ -195,7 +198,7 @@ dependencies {
     // EnumUtil
     implementation(libs.enumutil)
     ksp(libs.enumutil.ksp)
-    
+
     // Reorderable lists
     implementation(libs.reorderable)
 

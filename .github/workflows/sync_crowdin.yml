@@ -28,7 +28,7 @@ jobs:
           flutter-version: 3.24.x
 
       - name: Sync translations from Crowdin
-        uses: crowdin/github-action@v1
+        uses: crowdin/github-action@v2
         with:
           config: crowdin.yml
           upload_sources: true
